@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Data with Technical Indicators</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <h1>Stock Data with Technical Indicators</h1>
+
+    <!-- Toggle buttons for indicators -->
+    <button onclick="toggleIndicator('rsi')">Toggle RSI</button>
+    <button onclick="toggleIndicator('bollinger')">Toggle Bollinger Bands</button>
+    <button onclick="toggleIndicator('macd')">Toggle MACD</button>
+
+    <!-- Chart container -->
+    <canvas id="stockChart" width="400" height="200"></canvas>
+
+    <script>
+        let stockChart;
+        let stockData;
+
+        // Fetch data from the backend
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                stockData = data;
+                drawChart();  // Draw initial chart with default indicators
+            });
+
+        // Function to draw chart
+        function drawChart() {
+            const ctx = document.getElementById('stockChart').getContext('2d');
+            
+            // Example setup for the initial line chart of stock prices
+            stockChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: stockData.index,
+                    datasets: [{
+                        label: 'Close Price',
+                        data: stockData.close,
+                        borderColor: 'blue',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Stock Prices'
+                    }
+                }
+            });
+        }
+
+        // Toggle indicator on the chart
+        function toggleIndicator(indicator) {
+            switch (indicator) {
+                case 'rsi':
+                    toggleRSI();
+                    break;
+                case 'bollinger':
+                    toggleBollinger();
+                    break;
+                case 'macd':
+                    toggleMACD();
+                    break;
+            }
+        }
+
+        function toggleRSI() {
+            // Logic to toggle RSI indicator on the chart
+            console.log("Toggling RSI");
+        }
+
+        function toggleBollinger() {
+            // Logic to toggle Bollinger Bands on the chart
+            console.log("Toggling Bollinger Bands");
+        }
+
+        function toggleMACD() {
+            // Logic to toggle MACD indicator on the chart
+            console.log("Toggling MACD");
+        }
+    </script>
+
+</body>
+</html>
